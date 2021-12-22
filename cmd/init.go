@@ -15,13 +15,10 @@ import (
 // initCmd represents the init command
 var initCmd = &cobra.Command{
 	Use:   "init",
-	Short: "A brief description of your command",
-	Long: `A longer description that spans multiple lines and likely contains examples
-and usage of using your command. For example:
-
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
+	Short: "Create a brand new .todo file",
+	Long: `Example:
+	$ todo init
+This will create a brand new .todo file.`,
 	RunE: func(cmd *cobra.Command, args []string) error {
 		err := actionInit(FilePath)
 		return err
@@ -49,7 +46,7 @@ func actionInit(path string) error {
 	}
 	content := t.RenderToFile()
 	if _, err := os.Stat(t.Path); err == nil {
-		fmt.Printf("The file %q alreadey exists.\nPlease delete the file %q before using this command again\n", t.Path, t.Path)
+		fmt.Printf("The file %q already exists.\nPlease delete the file %q before using this command again\n", t.Path, t.Path)
 		os.Exit(0)
 	}
 	f, err := os.Create(t.Path)

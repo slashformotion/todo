@@ -65,3 +65,30 @@ func removeTask(stack []*Task, index int) ([]*Task, *Task) {
 	stack = stack[:len(stack)-1]       // Truncate slice.
 	return stack, rmTask
 }
+
+func (t *TodoFile) MarkAsCompleted(index int) (*Task, error) {
+	task, err := t.executeActionOnSpecificTask(index, MarkTaskAsCompleted)
+	return task, err
+}
+
+// Mark the task at index as uncompleted
+func (t *TodoFile) MarkAsUncompleted(index int) (*Task, error) {
+	task, err := t.executeActionOnSpecificTask(index, MarkTaskAsUncompleted)
+	return task, err
+}
+
+// Return the a *Task corresponding to the correct index
+func (t *TodoFile) getTask(index int) *Task {
+	return t.tasks[index]
+}
+
+// Execute the f func(*Task) err on the task located at the index i
+// Returns a task pointer and a potential error
+func (t *TodoFile) executeActionOnSpecificTask(i int, f func(*Task) error) (*Task, error) {
+	if i <= 0 || i > len(t.tasks) {
+		return nil, fmt.Errorf("index out of bounds ([1,%d]). go=%d", len(t.tasks), i)
+	}
+	task := t.getTask(i - 1)
+	err := f(task)
+	return task, err
+}

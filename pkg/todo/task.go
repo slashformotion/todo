@@ -46,3 +46,18 @@ func New(name string, done bool) (*Task, error) {
 func (t *Task) Complete() {
 	t.Completed = true
 }
+
+// Mark the task as uncomplete
+func (t *Task) Uncompleted() {
+	t.Completed = false
+}
+
+func MarkTaskAsCompleted(task *Task) error {
+	task.Complete()
+	return nil
+}
+
+func MarkTaskAsUncompleted(task *Task) error {
+	task.Uncompleted()
+	return nil
+}

@@ -29,14 +29,14 @@ func TestNewTodoFileInvalid(t *testing.T) {
 
 func TestAppend(t *testing.T) {
 	tf, _ := todo.NewTodoFile("./todo.todo")
-	task, _ := todo.New("fix the ship", false)
+	task, _ := todo.NewTask("fix the ship", false)
 	tf.Append(task)
 }
 
 func TestAppendMultiples(t *testing.T) {
 	tf, _ := todo.NewTodoFile("./todo.todo")
-	task1, _ := todo.New("fix the ship", false)
-	task2, _ := todo.New("fix the ship", false)
+	task1, _ := todo.NewTask("fix the ship", false)
+	task2, _ := todo.NewTask("fix the ship", false)
 	tasks := []*todo.Task{task1, task2}
 	tf.AppendMultiples(tasks)
 }

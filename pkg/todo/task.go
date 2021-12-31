@@ -4,60 +4,69 @@ import "fmt"
 
 // Those are constant slices, believe me... Explaination here => https://qvault.io/golang/golang-constant-maps-slices/
 
-// Return the caracter signaling that the task is done
-func DoneCharacters() []string { return []string{"X", "x"} }
+// CONSTANT: Return the caracter signaling that the task is done
+//     Explaination here => https://qvault.io/golang/golang-constant-maps-slices/
+func FinishedCharacters() []string { return []string{"X", "x"} }
 
-// Return the caracter signaling that the task is not done
-func TodoCharacter() []string { return []string{" ", ""} }
+// CONSTANT: Return the caracter signaling that the task is not done
+//     Explaination here => https://qvault.io/golang/golang-constant-maps-slices/
+func UnfinishedCharacters() []string { return []string{" ", ""} }
 
 func getStateChar(b bool) string {
 	if b {
-		return DoneCharacters()[0]
+		return FinishedCharacters()[0]
 	} else {
-		return TodoCharacter()[0]
+		return UnfinishedCharacters()[0]
 	}
 }
 
 // Task represents a Task in .todo files
 // 'Name' is the name of the task
-// 'Completed' is self-explainatory
+// 'Finished' is self-explainatory
 type Task struct {
-	Name      string
-	Completed bool
+	Name     string
+	finished bool
 }
 
 func (t *Task) getTaskStateChar() string {
-	return getStateChar(t.Completed)
+	return getStateChar(t.finished)
 }
 
 // Create a new Task with a name and a state of completion (boolean)
-func New(name string, done bool) (*Task, error) {
+func NewTask(name string, done bool) (*Task, error) {
 	if len(name) == 0 {
 		return nil, fmt.Errorf("name should be not be an empty string")
 	}
 	t := &Task{
-		Name:      name,
-		Completed: done,
+		Name:     name,
+		finished: done,
 	}
 	return t, nil
 }
 
-// Mark the task as complete
-func (t *Task) Complete() {
-	t.Completed = true
+// Mark the task as Finished
+func (t *Task) Finished() {
+	t.finished = true
 }
 
-// Mark the task as uncomplete
-func (t *Task) Uncompleted() {
-	t.Completed = false
+// Mark the task as Unfinished
+func (t *Task) Unfinished() {
+	t.finished = false
 }
 
-func MarkTaskAsCompleted(task *Task) error {
-	task.Complete()
+// return the true is the task is finished
+func (t *Task) IsFinished() bool {
+	return t.finished
+}
+
+// Mark the task as Finished
+func MarkTaskAsFinished(task *Task) error {
+	task.Finished()
 	return nil
 }
 
-func MarkTaskAsUncompleted(task *Task) error {
-	task.Uncompleted()
+// Mark the task as Unfinished
+func MarkTaskAsUnfinished(task *Task) error {
+	task.Unfinished()
 	return nil
 }

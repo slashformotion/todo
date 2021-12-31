@@ -67,13 +67,13 @@ func removeTask(stack []*Task, index int) ([]*Task, *Task) {
 }
 
 func (t *TodoFile) MarkAsCompleted(index int) (*Task, error) {
-	task, err := t.executeActionOnSpecificTask(index, MarkTaskAsCompleted)
+	task, err := t.executeActionOnSpecificTask(index, MarkTaskAsFinished)
 	return task, err
 }
 
 // Mark the task at index as uncompleted
 func (t *TodoFile) MarkAsUncompleted(index int) (*Task, error) {
-	task, err := t.executeActionOnSpecificTask(index, MarkTaskAsUncompleted)
+	task, err := t.executeActionOnSpecificTask(index, MarkTaskAsFinished)
 	return task, err
 }
 

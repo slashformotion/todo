@@ -6,9 +6,10 @@ package cmd
 
 import (
 	"fmt"
-	"os"
 
+	"github.com/slashformotion/todo/internal"
 	"github.com/slashformotion/todo/pkg/todo"
+	"github.com/spf13/afero"
 	"github.com/spf13/cobra"
 )
 
@@ -40,29 +41,17 @@ func init() {
 }
 
 func actionInit(path string) error {
-	t, err := todo.NewTodoFile(path)
+	todofile, err := todo.NewTodoFile(path)
 	if err != nil {
 		return err
 	}
-	content := t.RenderToFile()
-	if _, err := os.Stat(t.Path); err == nil {
-		fmt.Printf("The file %q already exists.\nPlease delete the file %q before using this command again\n", t.Path, t.Path)
-		os.Exit(0)
-	}
-	f, err := os.Create(t.Path)
+	exists, err := internal.FileExists(path)
 	if err != nil {
-		fmt.Printf("Error while creating %q\n", t.Path)
-		os.Exit(1)
+		return err
 	}
-	defer func() {
-		err := f.Close()
-		if err != nil {
-			panic(err)
-		}
-
-	}()
-	f.WriteString(content)
-
+	if empty, _ := afero.IsEmpty(internal.Fs, path); exists && !empty {
+		return fmt.Errorf("can't init a file that exists and is not empty")
+	}
+	internal.SaveTodoFile(todofile)
 	return nil
-
 }

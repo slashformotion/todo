@@ -18,7 +18,7 @@ var addCmd = &cobra.Command{
 	Use:   "add",
 	Short: "Add a new task to your .todo file.",
 	Long: `Example:
-	$ todo add "fix the ship" 
+	$ todo add "fix the ship"
 This command will add  a new task named "fix the ship" to your .todo file.`,
 	RunE: func(cmd *cobra.Command, args []string) error {
 		fmt.Println("add called")
@@ -67,7 +67,7 @@ func actionAdd(path, name string) error {
 	if err != nil {
 		return err
 	}
-	newTask, err := todo.New(name, false)
+	newTask, err := todo.NewTask(name, false)
 	if err != nil {
 		return err
 	}

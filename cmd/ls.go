@@ -6,10 +6,8 @@ package cmd
 
 import (
 	"fmt"
-	"io/ioutil"
-	"os"
 
-	"github.com/slashformotion/todo/pkg/todo"
+	"github.com/slashformotion/todo/internal"
 	"github.com/spf13/cobra"
 )
 
@@ -18,7 +16,7 @@ var lsCmd = &cobra.Command{
 	Use:   "ls",
 	Short: "List the tasks in you .todo file.",
 	Long: `Example:
-	$ todo ls  
+	$ todo ls
 This command will list the tasks your .todo file.`,
 	RunE: func(cmd *cobra.Command, args []string) error {
 		err := actionLs(FilePath)
@@ -41,35 +39,11 @@ func init() {
 }
 
 func actionLs(path string) error {
-	t, err := todo.NewTodoFile(path)
+	tf, err := internal.GetTodofile(path)
 	if err != nil {
 		return err
 	}
-	f, err := os.Open(t.Path)
-	if err != nil {
-		fmt.Printf("Error while opening %q\n", t.Path)
-		os.Exit(1)
-	}
-	defer func() {
-		err := f.Close()
-		if err != nil {
-			panic(err)
-		}
-
-	}()
-	fileContent, err := ioutil.ReadAll(f)
-	if err != nil {
-		fmt.Printf("Error while reading %q\n", t.Path)
-		os.Exit(1)
-	}
-
-	tasks, err := todo.Parse(string(fileContent))
-	if err != nil {
-		return err
-	}
-
-	t.AppendMultiples(tasks)
-	content := t.RenderToScreen()
+	content := tf.RenderToScreen()
 	fmt.Print(content)
 	return nil
 }

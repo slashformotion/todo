@@ -29,11 +29,11 @@ func ProcessMatch(match []string) (*Task, error) {
 	if len(name) == 0 {
 		return nil, fmt.Errorf("can't parse the .todo file correctly")
 	}
-	return New(name, checkIfTodoIsCompleted(match[1]))
+	return NewTask(name, checkIfTodoIsCompleted(match[1]))
 }
 
 func checkIfTodoIsCompleted(s string) bool {
-	for _, sym := range DoneCharacters() {
+	for _, sym := range UnfinishedCharacters() {
 		if s == sym {
 			return true
 		}

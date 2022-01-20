@@ -6,8 +6,8 @@ package cmd
 
 import (
 	"fmt"
-	"os"
 
+	"github.com/slashformotion/todo/internal"
 	"github.com/slashformotion/todo/pkg/todo"
 	"github.com/spf13/cobra"
 )
@@ -44,23 +44,11 @@ func actionClean(path string) error {
 	if err != nil {
 		return err
 	}
-	f, err := os.OpenFile(t.Path, os.O_WRONLY, 0666)
-	if err != nil {
-		fmt.Printf("Error while opening %q\n", t.Path)
-		os.Exit(1)
-	}
-	defer func() {
-		err := f.Close()
-		if err != nil {
-			panic(err)
-		}
-
-	}()
-	f, err = overwriteFile(f)
+	err = internal.SaveTodoFile(t)
 	if err != nil {
 		return err
 	}
-	f.WriteString(t.RenderToFile())
+
 	fmt.Println()
 	return nil
 }

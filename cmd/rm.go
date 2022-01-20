@@ -6,12 +6,11 @@ package cmd
 
 import (
 	"fmt"
-	"io/ioutil"
 	"os"
 	"strconv"
 	"strings"
 
-	"github.com/slashformotion/todo/pkg/todo"
+	"github.com/slashformotion/todo/internal"
 	"github.com/spf13/cobra"
 )
 
@@ -48,44 +47,21 @@ func actionRm(taskIndex, path string) error {
 		return fmt.Errorf("%q is not a number", taskIndex)
 	}
 
-	t, err := todo.NewTodoFile(path)
+	t, err := internal.GetTodofile(path)
 	if err != nil {
 		return err
 	}
-	f, err := os.OpenFile(t.Path, os.O_RDWR, 0666)
-	if err != nil {
-		fmt.Printf("Error while opening %q\n", t.Path)
-		os.Exit(1)
-	}
-	defer func() {
-		err := f.Close()
-		if err != nil {
-			panic(err)
-		}
 
-	}()
-	fileContent, err := ioutil.ReadAll(f)
-	if err != nil {
-		fmt.Printf("Error while reading %q\n", t.Path)
-		os.Exit(1)
-	}
-	tasks, err := todo.Parse(string(fileContent))
-	if err != nil {
-		return err
-	}
-	t.AppendMultiples(tasks)
 	rmTask, err := t.RemoveTask(index)
 	if err != nil {
 		fmt.Printf("index=%v does not exist, please run 'todo ls'\n", index)
 		os.Exit(0)
 	}
 
-	f, err = overwriteFile(f)
+	err = internal.SaveTodoFile(t)
 	if err != nil {
 		return err
 	}
-
-	f.WriteString(t.RenderToFile())
 	fmt.Printf("Task %q removed, now listing\n\n", rmTask.Name)
 	fmt.Println(t.RenderToScreen())
 	return nil

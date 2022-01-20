@@ -13,17 +13,25 @@ type TodoFile struct {
 }
 
 func NewTodoFile(path string) (*TodoFile, error) {
-	if len(path) == 0 {
-		return nil, fmt.Errorf("path can't be an empty string")
-	}
-	if !strings.HasSuffix(path, DefaultExtension) {
-		return nil, fmt.Errorf("file extension should be '%v'. got='%v'", DefaultExtension, path)
+	err := CheckTodoFileName(path)
+	if err != nil {
+		return nil, err
 	}
 	t := &TodoFile{
 		Path:  path,
 		tasks: make([]*Task, 0),
 	}
 	return t, nil
+}
+
+func CheckTodoFileName(path string) error {
+	if len(path) == 0 {
+		return fmt.Errorf("path can't be an empty string")
+	}
+	if !strings.HasSuffix(path, DefaultExtension) {
+		return fmt.Errorf("file extension should be '%v'. got='%v'", DefaultExtension, path)
+	}
+	return nil
 }
 
 func (t *TodoFile) Append(task *Task) {
@@ -67,13 +75,13 @@ func removeTask(stack []*Task, index int) ([]*Task, *Task) {
 }
 
 func (t *TodoFile) MarkAsCompleted(index int) (*Task, error) {
-	task, err := t.executeActionOnSpecificTask(index, MarkTaskAsCompleted)
+	task, err := t.executeActionOnSpecificTask(index, MarkTaskAsFinished)
 	return task, err
 }
 
 // Mark the task at index as uncompleted
 func (t *TodoFile) MarkAsUncompleted(index int) (*Task, error) {
-	task, err := t.executeActionOnSpecificTask(index, MarkTaskAsUncompleted)
+	task, err := t.executeActionOnSpecificTask(index, MarkTaskAsFinished)
 	return task, err
 }
 

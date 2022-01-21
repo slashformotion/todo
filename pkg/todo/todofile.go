@@ -81,7 +81,7 @@ func (t *TodoFile) MarkAsCompleted(index int) (*Task, error) {
 
 // Mark the task at index as uncompleted
 func (t *TodoFile) MarkAsUncompleted(index int) (*Task, error) {
-	task, err := t.executeActionOnSpecificTask(index, MarkTaskAsFinished)
+	task, err := t.executeActionOnSpecificTask(index, MarkTaskAsUnfinished)
 	return task, err
 }
 

@@ -35,8 +35,8 @@ func ProcessMatch(match []string) (*Task, error) {
 func checkIfTodoIsCompleted(s string) bool {
 	for _, sym := range UnfinishedCharacters() {
 		if s == sym {
-			return true
+			return false
 		}
 	}
-	return false
+	return true
 }

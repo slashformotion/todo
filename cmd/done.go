@@ -1,5 +1,5 @@
 /*
-Copyright © 2021 NAME HERE <EMAIL ADDRESS>
+Copyright © 2021 SLASHFORMOTION <slashformotion@protonmail.com>
 
 */
 package cmd

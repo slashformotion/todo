@@ -16,4 +16,6 @@ todo
 # vendor/
 
 # custom
-./todo.todo
+todo.todo
+github_token
+dist/

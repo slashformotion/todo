@@ -6,6 +6,7 @@ package cmd
 
 import (
 	"fmt"
+	"os"
 
 	"github.com/slashformotion/todo/internal"
 	"github.com/slashformotion/todo/pkg/todo"
@@ -45,13 +46,36 @@ func actionInit(path string) error {
 	if err != nil {
 		return err
 	}
-	exists, err := internal.FileExists(path)
+	exists, err := afero.Exists(internal.Fs, path)
 	if err != nil {
 		return err
 	}
-	if empty, _ := afero.IsEmpty(internal.Fs, path); exists && !empty {
-		return fmt.Errorf("can't init a file that exists and is not empty")
+	if exists {
+		isDir, err := afero.IsDir(internal.Fs, path)
+		if err != nil {
+			return err
+		}
+		if isDir {
+			return fmt.Errorf("can't init a file that is in facta directory")
+		}
+
+		empty, err := afero.IsEmpty(internal.Fs, path)
+		if err != nil {
+			panic(err)
+		}
+		if !empty {
+			return fmt.Errorf("can't init a file that exists and is not empty")
+		}
 	}
+	file, err := os.Create(path)
+	if err != nil {
+		return err
+	}
+	err = file.Close()
+	if err != nil {
+		return err
+	}
+
 	internal.SaveTodoFile(todofile)
 	return nil
 }

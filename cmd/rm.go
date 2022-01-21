@@ -66,15 +66,3 @@ func actionRm(taskIndex, path string) error {
 	fmt.Println(t.RenderToScreen())
 	return nil
 }
-
-func overwriteFile(f *os.File) (*os.File, error) {
-	err := f.Truncate(0)
-	if err != nil {
-		return nil, err
-	}
-	_, err = f.Seek(0, 0)
-	if err != nil {
-		return nil, err
-	}
-	return f, nil
-}

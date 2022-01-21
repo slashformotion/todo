@@ -1,5 +1,4 @@
-# todo ***[WIP]***
-
+# todo
 This project provide a CLI tool to manage [`.todo`](https://github.com/slashformotion/.todo) files. Currently this project support the `.todo` Specification *v0.0.1*.
 
 
@@ -22,18 +21,18 @@ Here are the command I intend to support
 - todo add <task> // add task
 - todo rm <number(s)> // remove the tasks corresponding to the number(s)
 - todo init // create an empty todo.todo file
+- todo clean // remove all tasks
 
 // eventually
 - todo fmt // format the .todo file
-- todo clean // remove all
 ```
 
 ***GLOBAL FLAGS***
 - `--path`
 
-  The path to your *`.todo`* file. (Exemple: `todo init --path todofolder/montodo.todo`)
+  The path to your *`.todo`* file. (Exemple: `todo init --path todofolder/mytodo.todo`)
 
-***COMMAND SPECIFIC FLAGS***
+<!-- ***COMMAND SPECIFIC FLAGS***
 
 - `ls`
   - `--done`
@@ -42,4 +41,4 @@ Here are the command I intend to support
 
   - `--todo`
 
-    Only show the waiting tasks
+    Only show the waiting tasks -->

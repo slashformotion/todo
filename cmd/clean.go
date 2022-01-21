@@ -44,11 +44,28 @@ func actionClean(path string) error {
 	if err != nil {
 		return err
 	}
+	prompt, err := internal.GetInteractiveBooleanPrompt("Do you want to wipe the whole file ?")
+	if err != nil {
+		panic(err)
+	}
+	var res string
+	for {
+		res, err = prompt.Run()
+		if err != nil {
+			fmt.Println("Please answer again.")
+		} else {
+			break
+		}
+	}
+	if res == "n" {
+		fmt.Println("Exiting now without whipping the file.")
+		return nil
+	}
 	err = internal.SaveTodoFile(t)
 	if err != nil {
 		return err
 	}
 
-	fmt.Println()
+	fmt.Printf("%q whipped !\n", path)
 	return nil
 }

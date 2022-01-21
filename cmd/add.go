@@ -6,9 +6,8 @@ package cmd
 
 import (
 	"fmt"
-	"io/ioutil"
-	"os"
 
+	"github.com/slashformotion/todo/internal"
 	"github.com/slashformotion/todo/pkg/todo"
 	"github.com/spf13/cobra"
 )
@@ -42,28 +41,7 @@ func init() {
 }
 
 func actionAdd(path, name string) error {
-	t, err := todo.NewTodoFile(path)
-	if err != nil {
-		return err
-	}
-	f, err := os.OpenFile(t.Path, os.O_RDWR, 0666)
-	if err != nil {
-		fmt.Printf("Error while opening %q\n", t.Path)
-		os.Exit(1)
-	}
-	defer func() {
-		err := f.Close()
-		if err != nil {
-			panic(err)
-		}
-
-	}()
-	fileContent, err := ioutil.ReadAll(f)
-	if err != nil {
-		fmt.Printf("Error while reading %q\n", t.Path)
-		os.Exit(1)
-	}
-	tasks, err := todo.Parse(string(fileContent))
+	t, err := internal.GetTodofile(path)
 	if err != nil {
 		return err
 	}
@@ -71,16 +49,11 @@ func actionAdd(path, name string) error {
 	if err != nil {
 		return err
 	}
-
-	t.AppendMultiples(tasks)
 	t.Append(newTask)
-
-	f, err = overwriteFile(f)
+	err = internal.SaveTodoFile(t)
 	if err != nil {
 		return err
 	}
-
-	f.WriteString(t.RenderToFile())
 	fmt.Printf("Task %q added, now listing\n\n", newTask.Name)
 	fmt.Println(t.RenderToScreen())
 	return nil

@@ -14,7 +14,7 @@ import (
 // lsCmd represents the ls command
 var lsCmd = &cobra.Command{
 	Use:   "ls",
-	Short: "List the tasks in you .todo file.",
+	Short: "List the tasks in your .todo file.",
 	Long: `Example:
 	$ todo ls
 This command will list the tasks your .todo file.`,

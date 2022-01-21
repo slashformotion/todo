@@ -1,5 +1,5 @@
 /*
-Copyright © 2021 NAME HERE <EMAIL ADDRESS>
+Copyright © 2021 SLASHFORMOTION <slashformotion@protonmail.com>
 
 */
 package cmd
@@ -16,13 +16,10 @@ import (
 // undoneCmd represents the undone command
 var undoneCmd = &cobra.Command{
 	Use:   "undone",
-	Short: "A brief description of your command",
-	Long: `A longer description that spans multiple lines and likely contains examples
-and usage of using your command. For example:
-
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
+	Short: "Mark the task corresponding to the number provided as unfinished",
+	Long: `Example:
+	$ todo done 1
+This mark the first task as unfinished`,
 	RunE: func(cmd *cobra.Command, args []string) error {
 		err := actionNotDone(args[0], FilePath)
 		return err

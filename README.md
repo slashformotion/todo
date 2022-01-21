@@ -15,7 +15,7 @@ Those task to be considered valid even if some of them are not entirely complien
 ```
 <!--  -->
 ## CLI
-Here are the command I intend to support
+Here are the supported commands:
 ```c <!-- I am aware this is not a c snippet, it's just here to make the syntax highlighting work -->
 - todo ls // list all the todo items
 - todo add <task> // add task
@@ -23,9 +23,9 @@ Here are the command I intend to support
 - todo init // create an empty todo.todo file
 - todo clean // remove all tasks
 
-// eventually
-- todo fmt // format the .todo file
 ```
+<!-- // eventually
+- todo fmt // format the .todo file -->
 
 ***GLOBAL FLAGS***
 - `--path`

@@ -6,6 +6,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.0.2] - 2022-01-29
+### Added
+- `fmt` command: *Format your .todo file.*
+
+### Fixed
+- typo in internal package
+
 ## [0.0.1] - 2022-01-21
 ### Added
 - `init` command: *Create a brand new .todo file*
@@ -16,5 +23,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `clean` command: *Erase the content of your .todo file*
 - `ls` command: *List the tasks in your .todo file.*
 
-[Unreleased]: https://github.com/slashformotion/todo/compare/v0.0.1...HEAD
+[Unreleased]: https://github.com/slashformotion/todo/compare/v0.0.2...HEAD
+[0.0.2]: https://github.com/slashformotion/todo/compare/v0.0.1...v0.0.2
 [0.0.1]: https://github.com/slashformotion/todo/releases/tag/v0.0.1

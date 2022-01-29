@@ -22,10 +22,9 @@ Here are the supported commands:
 - todo rm <number(s)> // remove the tasks corresponding to the number(s)
 - todo init // create an empty todo.todo file
 - todo clean // remove all tasks
-
+- todo fmt // format the .todo file
 ```
-<!-- // eventually
-- todo fmt // format the .todo file -->
+
 
 ***GLOBAL FLAGS***
 - `--path`

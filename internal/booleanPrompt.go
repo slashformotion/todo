@@ -9,7 +9,7 @@ import (
 func GetInteractiveBooleanPrompt(label string) (*promptui.Prompt, error) {
 	validate := func(input string) error {
 		if input != "y" && input != "n" {
-			return errors.New("nvalid input")
+			return errors.New("invalid input")
 		}
 		return nil
 	}
